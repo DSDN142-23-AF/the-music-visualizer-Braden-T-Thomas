@@ -22,8 +22,24 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   draw_pillars();
   draw_hole();
 
-  
+  // Back of piano
+  stroke("#010101");
+  strokeWeight(15);
+  line(width - 50, height - 360, width - 170, height - 530);
 
+  stroke("#151515");
+  strokeWeight(20);
+  line(0, height - 370, width * (8/9), height - 580);
+
+  stroke("#a1925d");
+  strokeWeight(7.5);
+  line(0, height - 365, width * (8/9), height - 575);
+
+  strokeWeight(1);
+  stroke("#151515");
+  fill("#151515");
+  rect(width/2, height - 330, width, 75);
+  
   // Keys for piano
   stroke(0);
   strokeWeight(1);
@@ -35,28 +51,56 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   textSize(vocal);
   text(words, width/2, height/3);
 
-  
-  for(let i = 0; i <= key_count; i++){
-    let key_x_pos = width-(width - ((width/key_count)/2)) + ((width/key_count) * i);
-    // I was planning on having different maps for each key, but nothing works. This is the best I'm gonna get.
-    var key_height = height-300 + map(other, 0, 100, 0, 25);
-    rect(key_x_pos, key_height, key_width, 50);
-    fill("#faf8f9");
-    stroke(0);
-  }
+
+  // Reminder for what was lost o7
+  //for(let i = 0; i <= key_count; i++){
+    //let key_x_pos = width-(width - ((width/key_count)/2)) + ((width/key_count) * i);
+    //var key_height = height-300 + map(other, 0, 100, 0, 25);
+  //}
+
+
+  // I *really* wish I didn't need to do this. But nothing else worked.
+  var other_key = height-300 + map(other, 0, 100, 0, 25);
+  var vocal_key = height-300 + map(vocal, 0, 100, 0, 25);
+  var drum_key = height-300 + map(drum, 0, 100, 0, 25);
+  var bass_key = height-300 + map(bass, 0, 100, 0, 25);
+
+  fill("#faf8f9");
+  stroke(0);
+  rect(width-(width - ((width/key_count)/2)) + ((width/key_count) * 0), other_key, key_width, 50); // Other
+  rect(width-(width - ((width/key_count)/2)) + ((width/key_count) * 1), vocal_key, key_width, 50); // Vocal
+  rect(width-(width - ((width/key_count)/2)) + ((width/key_count) * 2), bass_key, key_width, 50); // Bass
+  rect(width-(width - ((width/key_count)/2)) + ((width/key_count) * 3), drum_key, key_width, 50); // Drum
+  rect(width-(width - ((width/key_count)/2)) + ((width/key_count) * 4), other_key, key_width, 50); // Other
+  rect(width-(width - ((width/key_count)/2)) + ((width/key_count) * 5), bass_key, key_width, 50); // Bass
+  rect(width-(width - ((width/key_count)/2)) + ((width/key_count) * 6), drum_key, key_width, 50); // Drum
+  rect(width-(width - ((width/key_count)/2)) + ((width/key_count) * 7), vocal_key, key_width, 50); // Vocal
+  rect(width-(width - ((width/key_count)/2)) + ((width/key_count) * 8), drum_key, key_width, 50); // Drum
+  rect(width-(width - ((width/key_count)/2)) + ((width/key_count) * 9), other_key, key_width, 50); // Other
+  rect(width-(width - ((width/key_count)/2)) + ((width/key_count) * 10), bass_key, key_width, 50); // Bass
+  rect(width-(width - ((width/key_count)/2)) + ((width/key_count) * 11), vocal_key, key_width, 50); // Vocal
+  rect(width-(width - ((width/key_count)/2)) + ((width/key_count) * 12), drum_key, key_width, 50); // Drum
+  rect(width-(width - ((width/key_count)/2)) + ((width/key_count) * 13), other_key, key_width, 50); // Other
+  rect(width-(width - ((width/key_count)/2)) + ((width/key_count) * 14), drum_key, key_width, 50); // Drum
+  rect(width-(width - ((width/key_count)/2)) + ((width/key_count) * 15), bass_key, key_width, 50); // Bass
+  rect(width-(width - ((width/key_count)/2)) + ((width/key_count) * 16), other_key, key_width, 50); // Other
+  rect(width-(width - ((width/key_count)/2)) + ((width/key_count) * 17), vocal_key, key_width, 50); // Vocal
 
   // Piano body
-  fill("#11120d");
+  fill("#090a05");
   rect(width/2, height - 275, width+10, 50);
   
+  fill("#242726");
+  rect(width/2, height - 295, width+10, 10);
+
   stroke("FFFFFF");
   strokeWeight(7);
   line(width/2 - 40, height - 200, width/2 - 30, height - 25);
   line(width/2 + 40, height - 200, width/2 + 30, height - 25);
   line(width/2, height - 200, width/2, height - 25);
 
-  fill("#11120d");
-  stroke("#11120d");
+  fill("#090a05");
+  stroke("#090a05");
   strokeWeight(0.5);
   quad(15, height - 250, 25, height - 25, 55, height - 25, 65, height - 250)
   rect(40, height - 250, 60, 40);
@@ -71,15 +115,19 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   quad(width/2 + 75, height - 240, width/2 + 65, height - 20, width/2 + 45, height - 20, width/2 + 55, height - 240);
   rect(width/2, height, 130, 50);
 
-  stroke("#11120d");
+  stroke("#090a05");
   fill("#a1925d");
   quad(20, height - 25, 20, height, 60, height, 60, height - 35);
   quad(width - 20, height - 25, width - 20, height, width - 60, height, width - 60, height - 35);
 
 
-  //Ideas
-  // Pillars on the side behind piano to frame it
-  // Background gradient from light at the bottom to black at the top
+  left_paddle_map = map(vocal, 0, 100, 0, 5);
+  middle_paddle_map = map(drum, 0, 100, 0, 5);
+  right_paddle_map = map(bass, 0, 100, 0, 5);
+
+  rect(width/2 - 35, (height - 10) + left_paddle_map, 30, 20, 5);
+  rect(width/2, (height - 10) + middle_paddle_map, 30, 20, 5);
+  rect(width/2 + 35, (height - 10) + right_paddle_map, 30, 20, 5);
 }
 
 function draw_pillars(){
